@@ -1,11 +1,13 @@
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { RigidBody } from "@react-three/rapier";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useRapier, RigidBody } from "@react-three/rapier";
 
 const Player = () => {
   const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
+  const { rapier, world } = useRapier();
+
   useFrame((state, delta) => {
     const { forward, backward, leftward, rightward } = getKeys();
 
@@ -38,6 +40,29 @@ const Player = () => {
     body.current.applyImpulse(impulse);
     body.current.applyTorqueImpulse(torque);
   });
+
+  const jump = () => {
+    const origin = body.current.translation();
+    origin.y -= 0.31;
+    const direction = { x: 0, y: -1, z: 0 };
+    const ray = new rapier.Ray(origin, direction);
+    const hit = world.castRay(ray, 10, true);
+
+    if (hit.timeOfImpact < 0.15)
+      body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+  };
+
+  useEffect(() => {
+    const unsubscribeJump = subscribeKeys(
+      (state) => state.jump,
+      (value) => {
+        if (value) jump();
+      }
+    );
+    return () => {
+      unsubscribeJump();
+    };
+  }, []);
   return (
     <RigidBody
       position={[0, 1, 0]}

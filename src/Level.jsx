@@ -4,6 +4,7 @@ import BlockSpinner from "./BlockSpinner";
 import BlockLimbo from "./BlockLimbo";
 import BlockAxe from "./BlockAxe";
 import BlockEnd from "./BlockEnd";
+import Bound from "./Bound";
 
 const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] }) => {
   const blocks = useMemo(() => {
@@ -22,6 +23,7 @@ const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] }) => {
         <Block key={i} position={[0, 0, -(i + 1) * 4]} />
       ))}
       <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+      <Bound length={count + 2} />
     </>
   );
 };

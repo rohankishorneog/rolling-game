@@ -5,8 +5,14 @@ const useGame = create(
   subscribeWithSelector((set) => ({
     blocksCount: 3,
     phase: "ready",
+    startTime: 0,
+    endTime: 0,
     start: () => {
-      set((state) => (state.phase === "ready" ? { phase: "playing" } : {}));
+      set((state) =>
+        state.phase === "ready"
+          ? { phase: "playing", startTime: Date.now() }
+          : {}
+      );
     },
     restart: () => {
       set((state) =>
@@ -16,7 +22,9 @@ const useGame = create(
       );
     },
     end: () => {
-      set((state) => (state.phase === "playing" ? { phase: "ended" } : {}));
+      set((state) =>
+        state.phase === "playing" ? { phase: "ended", endTime: Date.now() } : {}
+      );
     },
   }))
 );

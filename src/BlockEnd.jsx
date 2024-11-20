@@ -1,6 +1,6 @@
 import React from "react";
 import { floor1Material, boxGeometry } from "./materials";
-import { useGLTF } from "@react-three/drei";
+import { Text, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
 const BlockEnd = ({ position = [0, 0, 0] }) => {
@@ -11,6 +11,14 @@ const BlockEnd = ({ position = [0, 0, 0] }) => {
 
   return (
     <group position={position}>
+      <Text
+        font="./bebas-neue-v9-latin-regular.woff"
+        scale={1}
+        position={[0, 1, 2]}
+      >
+        FINISH
+        <meshBasicMaterial toneMapped={false} />
+      </Text>
       <mesh
         geometry={boxGeometry}
         scale={[4, 0.2, 4]}

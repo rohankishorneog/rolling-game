@@ -3,10 +3,11 @@ import { subscribeWithSelector } from "zustand/middleware";
 
 const useGame = create(
   subscribeWithSelector((set) => ({
-    blocksCount: 3,
+    blocksCount: 10,
     phase: "ready",
     startTime: 0,
     endTime: 0,
+    blocksSeed: 0,
     start: () => {
       set((state) =>
         state.phase === "ready"
@@ -17,7 +18,7 @@ const useGame = create(
     restart: () => {
       set((state) =>
         state.phase === "playing" || state.phase === "ended"
-          ? { phase: "ready" }
+          ? { phase: "ready", blocksSeed: Math.random() }
           : {}
       );
     },

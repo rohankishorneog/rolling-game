@@ -6,7 +6,7 @@ import BlockAxe from "./BlockAxe";
 import BlockEnd from "./BlockEnd";
 import Bound from "./Bound";
 
-const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] }) => {
+const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] , seed}) => {
   const blocks = useMemo(() => {
     const blocks = [];
     for (let i = 0; i < count; i++) {
@@ -15,7 +15,7 @@ const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] }) => {
     }
 
     return blocks;
-  }, [count, types]);
+  }, [count, types, seed]);
   return (
     <>
       <BlockStart position={[0, 0, 0]} />
